@@ -12,3 +12,6 @@
         - nmap
         - wget
         - git
+        - python3-pip
+        - nano
+        - vim-nox
