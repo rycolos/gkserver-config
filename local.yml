@@ -103,7 +103,6 @@
       path: /home/ubuntu/.nanorc
       line: 
         - "set linenumbers"
-        - "set constantshow"
       state: present
       create: yes
       backup: yes
@@ -113,7 +112,6 @@
       path: /etc/nanorc
       line: 
         - "set linenumbers"
-        - "set constantshow"
       state: present
       create: yes
       backup: yes
