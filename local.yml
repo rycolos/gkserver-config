@@ -31,12 +31,35 @@
         - curl
       state: latest
 
+  - name: install required docker packages
+    apt:
+      name:
+        - ca-certificates
+        - curl
+        - gnupg
+        - lsb-release
+        - software-properties-common
+      state: latest
+  
+  - name: Add Docker GPG apt Key
+    apt_key:
+      url: https://download.docker.com/linux/ubuntu/gpg
+      state: present
+
+  - name: Add Docker Repository
+    apt_repository:
+      repo: deb https://download.docker.com/linux/ubuntu focal stable
+      state: present 
+  
   - name: install docker and docker-compose
     apt:
       name:
-        - 
+        - docker-ce
+        - docker-ce-cli
+        - containerd.io  
+        - docker-compose-plugin
+      state: latest
     
-
   - name: Create Docker home directory
     file:
       path: "{{ docker_location }}"
