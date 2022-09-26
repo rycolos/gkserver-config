@@ -64,6 +64,8 @@
     file:
       path: "/home/ubuntu/docker"
       mode: 0770
+      owner: ubuntu
+      group: docker
       state: directory
 
   - name: Add user account to Docker group
