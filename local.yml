@@ -62,12 +62,12 @@
     
   - name: Create Docker home directory
     file:
-      path: "{{ docker_location }}"
+      path: "/home/ubuntu/docker"
       mode: u=rwx
       state: directory
 
   - name: Add user account to Docker group
     user:
-      name: "{{ gkserver_user }}"
+      name: "ubuntu"
       groups: docker
       append: yes
