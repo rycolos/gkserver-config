@@ -3,6 +3,9 @@
   connection: local
   become: true
 
+  vars_file:
+    - default/main.yml
+
 #--- system update + upgrade ---
   tasks:
   - name: apt update
@@ -101,9 +104,7 @@
   - name: config user nano
     lineinfile:
       path: /home/ubuntu/.nanorc
-      line: 
-      - set linenumbers
-      - set constantshow
+      line: set linenumbers
       state: present
       create: yes
       backup: yes
@@ -116,9 +117,16 @@
       create: yes
       backup: yes
 
+  - name: create bin for scripts
+    file:
+      path: "/home/{{ gkserver_user }}/test"
+      mode: 0770
+      owner: ubuntu
+      group: ubuntu
+      state: directory
+
 #passwordless ssh
 #git ssh key
-#nano config
 #passwordless sudo
 #reserve dhcp ip
 #mount drives, add to fstab
