@@ -4,8 +4,18 @@
   become: true
 
   tasks:
-  - name: install packages
-    package:
+  - name: apt update
+    apt:
+      update_cache: yes
+      cache_valid_time: 3600
+
+  - name: apt upgrade
+    apt:
+      upgrade: full
+      state: latest
+
+  - name: install core packages
+    apt:
       name: 
         - htop
         - tmux
@@ -19,4 +29,22 @@
         - rclone
         - fish
         - curl
-        #- docker
+      state: latest
+
+  - name: install docker and docker-compose
+    apt:
+      name:
+        - 
+    
+
+  - name: Create Docker home directory
+    file:
+      path: "{{ docker_location }}"
+      mode: u=rwx
+      state: directory
+
+  - name: Add user account to Docker group
+    user:
+      name: "{{ gkserver_user }}"
+      groups: docker
+      append: yes
