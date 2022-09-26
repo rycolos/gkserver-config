@@ -3,6 +3,7 @@
   connection: local
   become: true
 
+#--- system update + upgrade ---
   tasks:
   - name: apt update
     apt:
@@ -14,6 +15,7 @@
       upgrade: full
       state: latest
 
+#--- install core packages ---
   - name: install core packages
     apt:
       name: 
@@ -24,13 +26,13 @@
         - git
         - python3-pip
         - nano
-        - vim-nox
         - lm-sensors
         - rclone
         - fish
         - curl
       state: latest
 
+#--- install docker ---
   - name: install required docker packages
     apt:
       name:
@@ -41,7 +43,7 @@
         - software-properties-common
       state: latest
   
-  - name: Add Docker GPG apt Key
+  - name: add docker gpg apt key
     apt_key:
       url: https://download.docker.com/linux/ubuntu/gpg
       state: present
@@ -60,7 +62,7 @@
         - docker-compose-plugin
       state: latest
     
-  - name: Create Docker home directory
+  - name: create docker home directory
     file:
       path: "/home/ubuntu/docker"
       mode: 0770
@@ -68,8 +70,55 @@
       group: docker
       state: directory
 
-  - name: Add user account to Docker group
+  - name: add user to docker group
     user:
       name: "ubuntu"
       groups: docker
       append: yes
+
+  # - name: download docker-compose file
+  #   git:
+  #     repo:
+  #     dest:
+
+#--- assorted config ---
+  - name: create bin for scripts
+    file:
+      path: "/home/ubuntu/bin"
+      mode: 0770
+      owner: ubuntu
+      group: ubuntu
+      state: directory
+
+  # - name: download backup scripts
+  #   git:
+  #     repo: 
+  #     dest: /home/ubuntu/bin/
+
+  # - name: create cronjobs
+  #   cron:
+
+  - name: config user nano
+    lineinfile:
+      path: /home/ubuntu/.nanorc
+      line: 
+        - "set linenumbers"
+        - "set constantshow"
+      state: present
+      backup: yes
+
+  - name: config root nano
+    lineinfile:
+      path: /etc/nanorc
+      line: 
+        - "set linenumbers"
+        - "set constantshow"
+      state: present
+      backup: yes
+
+#passwordless ssh
+#git ssh key
+#nano config
+#passwordless sudo
+#reserve dhcp ip
+#mount drives, add to fstab
