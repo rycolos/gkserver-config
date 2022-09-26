@@ -105,6 +105,7 @@
         - "set linenumbers"
         - "set constantshow"
       state: present
+      create: yes
       backup: yes
 
   - name: config root nano
@@ -114,6 +115,7 @@
         - "set linenumbers"
         - "set constantshow"
       state: present
+      create: yes
       backup: yes
 
 #passwordless ssh
