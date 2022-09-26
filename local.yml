@@ -63,7 +63,7 @@
   - name: Create Docker home directory
     file:
       path: "/home/ubuntu/docker"
-      mode: u+rwx
+      mode: 0770
       state: directory
 
   - name: Add user account to Docker group
