@@ -3,8 +3,7 @@
   connection: local
   become: true
 
-  vars_file:
-    - default/main.yml
+#SHOULD BE RUN BY A SCRIPT THAT INSTALLS GIT, THEN ANSIBLE
 
 #--- system update + upgrade ---
   tasks:
@@ -26,7 +25,6 @@
         - tmux
         - nmap
         - wget
-        - git
         - python3-pip
         - nano
         - lm-sensors
@@ -117,16 +115,14 @@
       create: yes
       backup: yes
 
-  - name: create bin for scripts
-    file:
-      path: "/home/{{ gkserver_user }}/test"
-      mode: 0770
-      owner: ubuntu
-      group: ubuntu
-      state: directory
-
+  - name: set default shell to fish
+    user:
+      name: ubuntu
+      shell: /usr/bin/fish
 #passwordless ssh
 #git ssh key
 #passwordless sudo
 #reserve dhcp ip
 #mount drives, add to fstab
+#make fish default shell
+#configure git
