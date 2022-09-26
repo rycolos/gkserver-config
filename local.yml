@@ -106,6 +106,7 @@
       state: present
       create: yes
       backup: yes
+    become_user: ubuntu
 
   - name: config root nano
     lineinfile:
@@ -124,5 +125,24 @@
 #passwordless sudo
 #reserve dhcp ip
 #mount drives, add to fstab
-#make fish default shell
-#configure git
+#--- configure git ---
+  - name: set git user
+    git_config:
+      name: user.name
+      scope: global
+      value: "Ryan LaLiberty"
+    become_user: ubuntu
+
+  - name: set git email
+    git_config:
+      name: user.email
+      scope: global
+      value: "rlaliberty@gmail.com"
+    become_user: ubuntu
+
+  - name: set git editor
+    git_config:
+      name: core.editor
+      scope: global
+      value: nano
+    become_user: ubuntu
