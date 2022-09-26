@@ -101,8 +101,7 @@
   - name: config user nano
     lineinfile:
       path: /home/ubuntu/.nanorc
-      line: 
-        - "set linenumbers"
+      line: set linenumbers
       state: present
       create: yes
       backup: yes
@@ -110,8 +109,7 @@
   - name: config root nano
     lineinfile:
       path: /etc/nanorc
-      line: 
-        - "set linenumbers"
+      line: set linenumbers
       state: present
       create: yes
       backup: yes
