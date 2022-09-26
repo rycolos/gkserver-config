@@ -101,7 +101,9 @@
   - name: config user nano
     lineinfile:
       path: /home/ubuntu/.nanorc
-      line: set linenumbers
+      line: 
+      - set linenumbers
+      - set constantshow
       state: present
       create: yes
       backup: yes
