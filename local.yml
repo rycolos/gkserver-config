@@ -82,7 +82,7 @@
 
   - name: download docker-compose file
     git:
-      repo: https://github.com/rycolos/gkserver-ansible.git
+      repo: https://github.com/rycolos/docker_config.git
       dest: "/home/{{ user }}/docker"
 
 #--- configure git ---
