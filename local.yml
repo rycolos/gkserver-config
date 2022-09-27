@@ -160,5 +160,6 @@
       group: "{{ user }}"
       state: directory
 
+#LIKELY BETTER LEFT AS MANUAL TASKS FOR RELIABILITY AND SECURITY
 #passwordless ssh
 #mount drives, add to fstab
