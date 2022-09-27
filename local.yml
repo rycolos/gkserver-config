@@ -33,6 +33,7 @@
         - rclone
         - fish
         - curl
+        - smartmontools
       state: latest
 
 #--- install docker ---
@@ -115,10 +116,12 @@
       group: "{{ user }}"
       state: directory
 
-  # - name: download backup scripts
-  #   git:
-  #     repo: 
-  #     dest: /home/{{ user }}/bin/
+  - name: download server admin scripts
+    git:
+      repo: https://github.com/rycolos/server-scripts.git
+      dest: /home/{{ user }}/bin/
+
+#QUESTION - do I need to chmod to give script exec perms?
 
   # - name: create cronjobs
   #   cron:
@@ -147,7 +150,7 @@
 
   - name: create backup hdd mount point
     file:
-      path: "/media/backup_1"
+      path: "/media/backup_main"
       mode: 0770
       owner: "{{ user }}"
       group: "{{ user }}"
@@ -160,11 +163,6 @@
       owner: "{{ user }}"
       group: "{{ user }}"
       state: directory
-
-  - name: Add another home bin dir to system-wide $PATH.
-    copy:
-      dest: /etc/profile.d/home-bin-path.sh
-      content: 'PATH=$PATH:/home/{{ user }}/bin'
 
 #LIKELY BETTER LEFT AS MANUAL TASKS FOR RELIABILITY AND SECURITY
 #passwordless ssh
