@@ -4,6 +4,7 @@
   become: true
 
 #SHOULD BE RUN BY A SCRIPT THAT INSTALLS GIT, THEN ANSIBLE
+#declare extra var user, "-e "user=XXXX"
 
 #--- system update + upgrade ---
   tasks:
@@ -65,15 +66,15 @@
     
   - name: create docker home directory
     file:
-      path: "/home/ubuntu/docker"
+      path: "/home/{{ user }}/docker"
       mode: 0770
-      owner: ubuntu
+      owner: "{{ user }}"
       group: docker
       state: directory
 
   - name: add user to docker group
     user:
-      name: "ubuntu"
+      name: "{{ user }}"
       groups: docker
       append: yes
 
@@ -88,49 +89,47 @@
       name: user.name
       scope: global
       value: "Ryan LaLiberty"
-    become_user: ubuntu
+    become_user: "{{ user }}"
 
   - name: set git email
     git_config:
       name: user.email
       scope: global
       value: "rlaliberty@gmail.com"
-    become_user: ubuntu
+    become_user: "{{ user }}"
 
   - name: set git editor
     git_config:
       name: core.editor
       scope: global
       value: nano
-    become_user: ubuntu
-
-  #git ssh key
+    become_user: "{{ user }}"
 
 #--- assorted config ---
   - name: create bin for scripts
     file:
-      path: "/home/ubuntu/bin"
+      path: "/home/{{ user }}/bin"
       mode: 0770
-      owner: ubuntu
-      group: ubuntu
+      owner: "{{ user }}"
+      group: "{{ user }}"
       state: directory
 
   # - name: download backup scripts
   #   git:
   #     repo: 
-  #     dest: /home/ubuntu/bin/
+  #     dest: /home/{{ user }}/bin/
 
   # - name: create cronjobs
   #   cron:
 
   - name: config user nano
     lineinfile:
-      path: /home/ubuntu/.nanorc
+      path: /home/{{ user }}/.nanorc
       line: set linenumbers
       state: present
       create: yes
       backup: yes
-    become_user: ubuntu
+    become_user: "{{ user }}"
 
   - name: config root nano
     lineinfile:
@@ -142,35 +141,24 @@
 
   - name: set default shell to fish
     user:
-      name: ubuntu
+      name: "{{ user }}"
       shell: /usr/bin/fish
 
   - name: create backup hdd mount point
     file:
-      path: "/media/backup1"
+      path: "/media/backup_1"
       mode: 0770
-      owner: ubuntu
-      group: ubuntu
+      owner: "{{ user }}"
+      group: "{{ user }}"
       state: directory
  
   - name: create plex hdd mount point
     file:
       path: "/media/plex_library"
       mode: 0770
-      owner: ubuntu
-      group: ubuntu
+      owner: "{{ user }}"
+      group: "{{ user }}"
       state: directory
-
-  - name: create plex hdd mount point
-    file:
-      path: "{{ test }}"
-      mode: 0770
-      owner: ubuntu
-      group: ubuntu
-      state: directory
-
 
 #passwordless ssh
-#passwordless sudo
-#reserve dhcp ip
 #mount drives, add to fstab
