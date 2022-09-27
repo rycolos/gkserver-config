@@ -80,10 +80,10 @@
       groups: docker
       append: yes
 
-  # - name: download docker-compose file
-  #   git:
-  #     repo:
-  #     dest: "/home/{{ user }}/docker"
+  - name: download docker-compose file
+    git:
+      repo: https://github.com/rycolos/gkserver-ansible.git
+      dest: "/home/{{ user }}/docker"
 
 #--- configure git ---
   - name: set git user
