@@ -144,6 +144,32 @@
     user:
       name: ubuntu
       shell: /usr/bin/fish
+
+  - name: create backup hdd mount point
+    file:
+      path: "/media/backup1"
+      mode: 0770
+      owner: ubuntu
+      group: ubuntu
+      state: directory
+ 
+  - name: create plex hdd mount point
+    file:
+      path: "/media/plex_library"
+      mode: 0770
+      owner: ubuntu
+      group: ubuntu
+      state: directory
+
+  - name: create plex hdd mount point
+    file:
+      path: {{ test }}
+      mode: 0770
+      owner: ubuntu
+      group: ubuntu
+      state: directory
+
+
 #passwordless ssh
 #passwordless sudo
 #reserve dhcp ip
