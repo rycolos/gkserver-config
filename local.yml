@@ -5,6 +5,7 @@
 
 #SHOULD BE RUN BY A SCRIPT THAT INSTALLS GIT, THEN ANSIBLE
 #declare extra var user, "-e "user=XXXX"
+#ansible-pull -e "user=ubuntu" -U https://github.com/rycolos/gkserver-ansible.git local.yml
 
 #--- system update + upgrade ---
   tasks:
@@ -81,7 +82,7 @@
   # - name: download docker-compose file
   #   git:
   #     repo:
-  #     dest:
+  #     dest: "/home/{{ user }}/docker"
 
 #--- configure git ---
   - name: set git user
@@ -160,6 +161,12 @@
       group: "{{ user }}"
       state: directory
 
+  - name: Add another home bin dir to system-wide $PATH.
+    copy:
+      dest: /etc/profile.d/home-bin-path.sh
+      content: 'PATH=$PATH:/home/{{ user }}/bin'
+
 #LIKELY BETTER LEFT AS MANUAL TASKS FOR RELIABILITY AND SECURITY
 #passwordless ssh
 #mount drives, add to fstab
+#docker-compose up -d
