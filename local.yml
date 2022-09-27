@@ -163,7 +163,7 @@
 
   - name: create plex hdd mount point
     file:
-      path: {{ test }}
+      path: "{{ test }}"
       mode: 0770
       owner: ubuntu
       group: ubuntu
