@@ -218,3 +218,15 @@
       name: "plex_library report"
       day: 24
       job: /usr/sbin/smartctl -a /dev/sdb >> /home/kepler/logs/hdd_ext2_report.log 2>&1 && echo "/usr/sbin/smartctl -a /dev/sdb" | python3 /home/kepler/bin/discord-pipe.py
+
+  - name: cron - test1
+    cron:
+      name: "test1"
+      hour: 9
+      job: echo "1" > /home/ubuntu/test1.log
+
+  - name: cron - test2
+    cron:
+      name: "test2"
+      hour: "9"
+      job: "echo \"1\" > /home/ubuntu/test1.log"
