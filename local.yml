@@ -3,12 +3,14 @@
   connection: local
   become: true
 
-#SHOULD BE RUN BY A SCRIPT THAT INSTALLS GIT, THEN ANSIBLE
-#declare extra var user, "-e "user=XXXX"
-#ansible-pull -e "user=ubuntu" -U https://github.com/rycolos/gkserver-ansible.git local.yml
+  tasks:
+  
+#--- set timezone ---
+  - name: set timezone to NY
+    timezone:
+      name: America/New_York
 
 #--- system update + upgrade ---
-  tasks:
   - name: apt update
     apt:
       update_cache: yes
@@ -79,6 +81,7 @@
       name: "{{ user }}"
       groups: docker
       append: yes
+      state: present
 
   - name: download docker-compose file
     git:
@@ -91,6 +94,7 @@
       name: user.name
       scope: global
       value: "Ryan LaLiberty"
+      state: present
     become_user: "{{ user }}"
 
   - name: set git email
@@ -98,6 +102,7 @@
       name: user.email
       scope: global
       value: "rlaliberty@gmail.com"
+      state: present
     become_user: "{{ user }}"
 
   - name: set git editor
@@ -105,6 +110,7 @@
       name: core.editor
       scope: global
       value: nano
+      state: present
     become_user: "{{ user }}"
 
 #--- assorted config ---
@@ -120,8 +126,6 @@
     git:
       repo: https://github.com/rycolos/server-scripts.git
       dest: /home/{{ user }}/bin/
-
-#QUESTION - do I need to chmod to give script exec perms?
 
   - name: config user nano
     lineinfile:
@@ -144,6 +148,7 @@
     user:
       name: "{{ user }}"
       shell: /usr/bin/fish
+      state: present
 
   - name: create backup hdd mount point
     file:
@@ -168,6 +173,7 @@
       weekday: "0"
       hour: "2"
       job: /home/kepler/bin/trash_clean.sh && echo "/home/kepler/bin/trash_clean.sh" | python3 /home/kepler/bin/discord-pipe.py
+      state: present
 
   - name: cron - music library backup
     cron:
@@ -175,6 +181,7 @@
       weekday: "0"
       hour: "0"
       job: /home/kepler/bin/plex_gkserver_backup.sh && echo "/home/kepler/bin/plex_gkserver_backup.sh" | python3 /home/kepler/bin/discord-pipe.py
+      state: present
 
   - name: cron - home to backup1
     cron:
@@ -187,6 +194,7 @@
       name: "docker-data to backup1"
       hour: "3"
       job: /home/kepler/bin/docker_gkserver_backup.sh && echo "/home/kepler/bin/docker_gkserver_backup.sh" | python3 /home/kepler/bin/discord-pipe.py
+      state: present
 
   - name: cron - backup1 to gdrive
     cron:
@@ -194,27 +202,32 @@
       weekday: "6"
       hour: "2"
       job: /home/kepler/bin/gdrive_gkserver_backup.sh && echo "/home/kepler/bin/gdrive_gkserver_backup.sh" | python3 /home/kepler/bin/discord-pipe.py
-  
+      state: present
+
   - name: cron - backup1 test
     cron:
       name: "backup1 test"
       day: "18"
       job: /usr/sbin/smartctl --test=long /dev/sda &> /dev/null
+      state: present
 
   - name: cron - backup1 report
     cron:
       name: "backup1 report"
       day: "20"
       job: /usr/sbin/smartctl -a /dev/sda >> /home/kepler/logs/hdd_ext1_report.log 2>&1 && echo "/usr/sbin/smartctl -a /dev/sda" | python3 /home/kepler/bin/discord-pipe.py
+      state: present
 
   - name: cron - plex_library test
     cron:
       name: "plex_library test"
       day: "22"
       job: /usr/sbin/smartctl --test=long /dev/sdb &> /dev/null
+      state: present
 
   - name: cron - plex_library report
     cron:
       name: "plex_library report"
       day: "24"
       job: /usr/sbin/smartctl -a /dev/sdb >> /home/kepler/logs/hdd_ext2_report.log 2>&1 && echo "/usr/sbin/smartctl -a /dev/sdb" | python3 /home/kepler/bin/discord-pipe.py
+      state: present
