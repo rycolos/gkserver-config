@@ -170,7 +170,7 @@
   - name: clone gkserver-config repo
     git:
       repo: https://github.com/rycolos/gkserver-config.git
-      dest: /home/{{ user }}
+      dest: /home/{{ user }}/
     become_user: "{{ user }}"
 
   # - name: download docker-compose file
