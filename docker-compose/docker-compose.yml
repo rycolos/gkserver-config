@@ -17,8 +17,8 @@ services:
       - PGID=1000
       - VERSION=docker
     volumes:
-      - /media/kepler/plex_library/:/config
-      - /media/kepler/plex_library/music/:/music
+      - ${BACKUP_DIR}/plex_library/:/config
+      - ${BACKUP_DIR}/plex_library/music/:/music
     restart: unless-stopped
 
   syncthing:
@@ -29,9 +29,9 @@ services:
       - PGID=1000
       - TZ=America/New_York
     volumes:
-      - ./docker-data/syncthing/config:/config
-      - /media/kepler/backup/ryan_mba_documents:/ryan_mba_documents
-      - /media/kepler/backup/ryan_mba_desktop:/ryan_mba_desktop
+      - ${DATA_DIR}/syncthing/config:/config
+      - ${BACKUP_DIR}/backup/ryan_mba_documents:/ryan_mba_documents
+      - ${BACKUP_DIR}/backup/ryan_mba_desktop:/ryan_mba_desktop
     ports:
       - "8384:8384"
       - "22000:22000/tcp"
@@ -48,7 +48,7 @@ services:
       - HOMEBRIDGE_CONFIG_UI_PORT=8581
       - HOMEBRIDGE_CONFIG_UI=1
     volumes:
-      - ./docker-data/homebridge:/homebridge
+      - ${DATA_DIR}/homebridge:/homebridge
   
   wireguard:
     image: linuxserver/wireguard
@@ -66,7 +66,7 @@ services:
       - PEERDNS=auto
       - INTERNET_SUBNET=10.13.13.0
     volumes:
-      - ./docker-data/wireguard/config:/config
+      - ${DATA_DIR}/wireguard/config:/config
       - /lib/modules:/lib/modules
     ports:
       - "51820:51820/udp"
@@ -81,7 +81,7 @@ services:
       - "21:21"
       - "30000-30009:30000-30009"
     volumes: 
-      - /media/kepler/backup/cctv:/home
+      - ${BACKUP_DIR}/backup/cctv:/home
     environment:
       FTP_USER_NAME: ${FTP_USER}
       FTP_USER_PASS: ${FTP_PASS}
@@ -94,8 +94,8 @@ services:
     ports:
       - "9090:9090"
     volumes:
-      - ./docker-data/prometheus:/etc/prometheus
-      - prometheus_data:/prometheus
+      - ${DATA_DIR}/prometheus:/etc/prometheus
+      - ${DATA_DIR}/prometheus/prometheus_data:/prometheus
     restart: unless-stopped
     command:
       - "--config.file=/etc/prometheus/prometheus.yml"
@@ -107,7 +107,7 @@ services:
     ports:
       - "3000:3000"
     volumes:
-      - ./docker-data/grafana/grafana_data:/var/lib/grafana
+      - ${DATA_DIR}/grafana/grafana_data:/var/lib/grafana
     restart: unless-stopped
 
   node_exporter:
@@ -142,14 +142,14 @@ services:
     ports:
     - "18080:80"
     volumes:
-    - ./docker-data/nginx/website:/usr/share/nginx/html
+    - ${DATA_DIR}/nginx/website:/usr/share/nginx/html
 
   homeassistant:
     container_name: homeassistant
     image: "ghcr.io/home-assistant/home-assistant:stable"
     network_mode: host
     volumes:
-      - ./docker-data/homeassistant:/config
+      - ${DATA_DIR}/homeassistant:/config
       - /etc/localtime:/etc/localtime:ro
     restart: unless-stopped
     privileged: true
