@@ -54,7 +54,7 @@
       url: https://download.docker.com/linux/ubuntu/gpg
       state: present
 
-  - name: Add Docker Repository
+  - name: add Ddcker repo to apt
     apt_repository:
       repo: deb https://download.docker.com/linux/ubuntu focal stable
       state: present 
@@ -68,25 +68,12 @@
         - docker-compose-plugin
       state: latest
     
-  - name: create docker home directory
-    file:
-      path: "/home/{{ user }}/docker"
-      mode: 0770
-      owner: "{{ user }}"
-      group: docker
-      state: directory
-
   - name: add user to docker group
     user:
       name: "{{ user }}"
       groups: docker
       append: yes
       state: present
-
-  - name: download docker-compose file
-    git:
-      repo: https://github.com/rycolos/docker_config.git
-      dest: "/home/{{ user }}/docker"
 
 #--- configure git ---
   - name: set git user
@@ -114,20 +101,7 @@
     become_user: "{{ user }}"
 
 #--- assorted config ---
-  - name: create bin for scripts
-    file:
-      path: "/home/{{ user }}/bin"
-      mode: 0770
-      owner: "{{ user }}"
-      group: "{{ user }}"
-      state: directory
-
-  - name: download server admin scripts
-    git:
-      repo: https://github.com/rycolos/server-scripts.git
-      dest: /home/{{ user }}/bin/
-
-  - name: config user nano
+  - name: config user nano editor
     lineinfile:
       path: /home/{{ user }}/.nanorc
       line: set linenumbers
@@ -136,7 +110,7 @@
       backup: yes
     become_user: "{{ user }}"
 
-  - name: config root nano
+  - name: config root nano editor
     lineinfile:
       path: /etc/nanorc
       line: set linenumbers
@@ -149,6 +123,31 @@
       name: "{{ user }}"
       shell: /usr/bin/fish
       state: present
+
+#--- create directories ---
+  - name: create docker home directory
+    file:
+      path: "/home/{{ user }}/docker"
+      mode: 0770
+      owner: "{{ user }}"
+      group: docker
+      state: directory
+
+  - name: create dir for scripts
+    file:
+      path: "/home/{{ user }}/bin"
+      mode: 0770
+      owner: "{{ user }}"
+      group: "{{ user }}"
+      state: directory
+
+  - name: create dir for logs
+    file:
+      path: "/home/{{ user }}/logs"
+      mode: 0770
+      owner: "{{ user }}"
+      group: "{{ user }}"
+      state: directory
 
   - name: create backup hdd mount point
     file:
@@ -165,6 +164,17 @@
       owner: "{{ user }}"
       group: "{{ user }}"
       state: directory
+
+#--- clone gkserver repo for utilities and config
+  - name: download docker-compose file
+    git:
+      repo: https://github.com/rycolos/docker_config.git
+      dest: /home/{{ user }}/docker
+
+  - name: download server admin scripts
+    git:
+      repo: https://github.com/rycolos/server-scripts.git
+      dest: /home/{{ user }}/bin
 
 #--- create cronjobs ---
   - name: cron - retention policy
@@ -183,20 +193,20 @@
       job: /home/kepler/bin/plex_gkserver_backup.sh && echo "/home/kepler/bin/plex_gkserver_backup.sh" | python3 /home/kepler/bin/discord-pipe.py
       state: present
 
-  - name: cron - home to backup1
+  - name: cron - home to backup_main
     cron:
-      name: "home to backup1"
+      name: "home to backup_main"
       hour: "2"
       job: /home/kepler/bin/home_gkserver_backup.sh && echo "/home/kepler/bin/home_gkserver_backup.sh" | python3 /home/kepler/bin/discord-pipe.py
 
-  - name: cron - docker-data to backup1
+  - name: cron - docker-data to backup_main
     cron:
-      name: "docker-data to backup1"
+      name: "docker-data to backup_main"
       hour: "3"
       job: /home/kepler/bin/docker_gkserver_backup.sh && echo "/home/kepler/bin/docker_gkserver_backup.sh" | python3 /home/kepler/bin/discord-pipe.py
       state: present
 
-  - name: cron - backup1 to gdrive
+  - name: cron - backup_main to gdrive
     cron:
       name: "retention policy"
       weekday: "6"
@@ -204,16 +214,16 @@
       job: /home/kepler/bin/gdrive_gkserver_backup.sh && echo "/home/kepler/bin/gdrive_gkserver_backup.sh" | python3 /home/kepler/bin/discord-pipe.py
       state: present
 
-  - name: cron - backup1 test
+  - name: cron - backup_main test
     cron:
-      name: "backup1 test"
+      name: "backup_main test"
       day: "18"
       job: /usr/sbin/smartctl --test=long /dev/sda &> /dev/null
       state: present
 
-  - name: cron - backup1 report
+  - name: cron - backup_main report
     cron:
-      name: "backup1 report"
+      name: "backup_main report"
       day: "20"
       job: /usr/sbin/smartctl -a /dev/sda >> /home/kepler/logs/hdd_ext1_report.log 2>&1 && echo "/usr/sbin/smartctl -a /dev/sda" | python3 /home/kepler/bin/discord-pipe.py
       state: present
