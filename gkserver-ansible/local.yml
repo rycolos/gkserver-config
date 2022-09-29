@@ -1,0 +1,249 @@
+---
+- hosts: localhost
+  connection: local
+  become: true
+
+  tasks:
+  
+#--- set timezone ---
+  - name: set timezone to NY
+    timezone:
+      name: America/New_York
+
+#--- system update + upgrade ---
+  - name: apt update
+    apt:
+      update_cache: yes
+      cache_valid_time: 3600
+
+  - name: apt upgrade
+    apt:
+      upgrade: full
+      state: latest
+
+#--- install core packages ---
+  - name: install core packages
+    apt:
+      name: 
+        - htop
+        - tmux
+        - nmap
+        - wget
+        - python3-pip
+        - nano
+        - lm-sensors
+        - rclone
+        - fish
+        - curl
+        - smartmontools
+      state: latest
+
+#--- install docker ---
+  - name: install required docker packages
+    apt:
+      name:
+        - ca-certificates
+        - curl
+        - gnupg
+        - lsb-release
+        - software-properties-common
+      state: latest
+  
+  - name: add docker gpg apt key
+    apt_key:
+      url: https://download.docker.com/linux/ubuntu/gpg
+      state: present
+
+  - name: add Ddcker repo to apt
+    apt_repository:
+      repo: deb https://download.docker.com/linux/ubuntu focal stable
+      state: present 
+  
+  - name: install docker and docker-compose
+    apt:
+      name:
+        - docker-ce
+        - docker-ce-cli
+        - containerd.io  
+        - docker-compose-plugin
+      state: latest
+    
+  - name: add user to docker group
+    user:
+      name: "{{ user }}"
+      groups: docker
+      append: yes
+      state: present
+
+#--- configure git ---
+  - name: set git user
+    git_config:
+      name: user.name
+      scope: global
+      value: "Ryan LaLiberty"
+      state: present
+    become_user: "{{ user }}"
+
+  - name: set git email
+    git_config:
+      name: user.email
+      scope: global
+      value: "rlaliberty@gmail.com"
+      state: present
+    become_user: "{{ user }}"
+
+  - name: set git editor
+    git_config:
+      name: core.editor
+      scope: global
+      value: nano
+      state: present
+    become_user: "{{ user }}"
+
+#--- assorted config ---
+  - name: config user nano editor
+    lineinfile:
+      path: /home/{{ user }}/.nanorc
+      line: set linenumbers
+      state: present
+      create: yes
+      backup: yes
+    become_user: "{{ user }}"
+
+  - name: config root nano editor
+    lineinfile:
+      path: /etc/nanorc
+      line: set linenumbers
+      state: present
+      create: yes
+      backup: yes
+
+  - name: set default shell to fish
+    user:
+      name: "{{ user }}"
+      shell: /usr/bin/fish
+      state: present
+
+#--- create directories ---
+  # - name: create docker home directory
+  #   file:
+  #     path: "/home/{{ user }}/docker"
+  #     mode: 0770
+  #     owner: "{{ user }}"
+  #     group: docker
+  #     state: directory
+
+  # - name: create dir for scripts
+  #   file:
+  #     path: "/home/{{ user }}/bin"
+  #     mode: 0770
+  #     owner: "{{ user }}"
+  #     group: "{{ user }}"
+  #     state: directory
+
+  - name: create dir for logs
+    file:
+      path: "/home/{{ user }}/logs"
+      mode: 0770
+      owner: "{{ user }}"
+      group: "{{ user }}"
+      state: directory
+
+  - name: create backup hdd mount point
+    file:
+      path: "/media/backup_main"
+      mode: 0770
+      owner: "{{ user }}"
+      group: "{{ user }}"
+      state: directory
+ 
+  - name: create plex hdd mount point
+    file:
+      path: "/media/plex_library"
+      mode: 0770
+      owner: "{{ user }}"
+      group: "{{ user }}"
+      state: directory
+
+#--- clone gkserver repo for utilities and config
+  - name: clone gkserver-config repo
+    git:
+      repo: https://github.com/rycolos/gkserver-config.git
+      dest: /home/{{ user }}
+    become_user: "{{ user }}"
+
+  # - name: download docker-compose file
+  #   git:
+  #     repo: https://github.com/rycolos/docker_config.git
+  #     dest: /home/{{ user }}/docker
+
+  # - name: download server admin scripts
+  #   git:
+  #     repo: https://github.com/rycolos/server-scripts.git
+  #     dest: /home/{{ user }}/bin
+
+#--- create cronjobs ---
+  - name: cron - retention policy
+    cron:
+      name: "retention policy"
+      weekday: "0"
+      hour: "2"
+      job: /home/{{ user }}/bin/trash_clean.sh && echo "/home/{{ user }}/bin/trash_clean.sh" | python3 /home/{{ user }}/bin/discord-pipe.py
+      state: present
+
+  - name: cron - music library backup
+    cron:
+      name: "music library backup"
+      weekday: "0"
+      hour: "0"
+      job: /home/kepler/bin/plex_gkserver_backup.sh && echo "/home/kepler/bin/plex_gkserver_backup.sh" | python3 /home/kepler/bin/discord-pipe.py
+      state: present
+
+  - name: cron - home to backup_main
+    cron:
+      name: "home to backup_main"
+      hour: "2"
+      job: /home/kepler/bin/home_gkserver_backup.sh && echo "/home/kepler/bin/home_gkserver_backup.sh" | python3 /home/kepler/bin/discord-pipe.py
+
+  - name: cron - docker-data to backup_main
+    cron:
+      name: "docker-data to backup_main"
+      hour: "3"
+      job: /home/kepler/bin/docker_gkserver_backup.sh && echo "/home/kepler/bin/docker_gkserver_backup.sh" | python3 /home/kepler/bin/discord-pipe.py
+      state: present
+
+  - name: cron - backup_main to gdrive
+    cron:
+      name: "retention policy"
+      weekday: "6"
+      hour: "2"
+      job: /home/kepler/bin/gdrive_gkserver_backup.sh && echo "/home/kepler/bin/gdrive_gkserver_backup.sh" | python3 /home/kepler/bin/discord-pipe.py
+      state: present
+
+  - name: cron - backup_main test
+    cron:
+      name: "backup_main test"
+      day: "18"
+      job: /usr/sbin/smartctl --test=long /dev/sda &> /dev/null
+      state: present
+
+  - name: cron - backup_main report
+    cron:
+      name: "backup_main report"
+      day: "20"
+      job: /usr/sbin/smartctl -a /dev/sda >> /home/kepler/logs/hdd_ext1_report.log 2>&1 && echo "/usr/sbin/smartctl -a /dev/sda" | python3 /home/kepler/bin/discord-pipe.py
+      state: present
+
+  - name: cron - plex_library test
+    cron:
+      name: "plex_library test"
+      day: "22"
+      job: /usr/sbin/smartctl --test=long /dev/sdb &> /dev/null
+      state: present
+
+  - name: cron - plex_library report
+    cron:
+      name: "plex_library report"
+      day: "24"
+      job: /usr/sbin/smartctl -a /dev/sdb >> /home/kepler/logs/hdd_ext2_report.log 2>&1 && echo "/usr/sbin/smartctl -a /dev/sdb" | python3 /home/kepler/bin/discord-pipe.py
+      state: present
