@@ -91,7 +91,7 @@
     git_config:
       name: user.email
       scope: global
-      value: "rlaliberty@gmail.com"
+      value: "rycolos@gkserver.net"
       state: present
     become_user: "{{ user }}"
 
