@@ -37,6 +37,7 @@
         - fish
         - curl
         - tree
+        - vim
         - smartmontools
       state: latest
 
