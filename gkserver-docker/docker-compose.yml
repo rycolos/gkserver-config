@@ -1,0 +1,155 @@
+version: "3.8"
+
+volumes:
+  prometheus_data:
+    driver: local
+  grafana_data:
+    driver: local
+
+services:
+  plex:
+    image: linuxserver/plex:latest
+    container_name: plex
+    network_mode: host
+    environment:
+      - TZ=America/New_York
+      - PUID=1000
+      - PGID=1000
+      - VERSION=docker
+    volumes:
+      - /media/kepler/plex_library/:/config
+      - /media/kepler/plex_library/music/:/music
+    restart: unless-stopped
+
+  syncthing:
+    image: linuxserver/syncthing:latest
+    container_name: syncthing
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=America/New_York
+    volumes:
+      - ./docker-data/syncthing/config:/config
+      - /media/kepler/backup/ryan_mba_documents:/ryan_mba_documents
+      - /media/kepler/backup/ryan_mba_desktop:/ryan_mba_desktop
+    ports:
+      - "8384:8384"
+      - "22000:22000/tcp"
+      - "22000:22000/udp"
+      - "21027:21027/udp"
+    restart: unless-stopped
+
+  homebridge:
+    image: oznu/homebridge:ubuntu
+    container_name: homebridge
+    restart: always
+    network_mode: host
+    environment:
+      - HOMEBRIDGE_CONFIG_UI_PORT=8581
+      - HOMEBRIDGE_CONFIG_UI=1
+    volumes:
+      - ./docker-data/homebridge:/homebridge
+  
+  wireguard:
+    image: linuxserver/wireguard
+    container_name: wireguard
+    cap_add:
+      - NET_ADMIN
+      - SYS_MODULE
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=America/New York
+      - SERVERURL=auto
+      - SERVERPORT=51820
+      - PEERS=2
+      - PEERDNS=auto
+      - INTERNET_SUBNET=10.13.13.0
+    volumes:
+      - ./docker-data/wireguard/config:/config
+      - /lib/modules:/lib/modules
+    ports:
+      - "51820:51820/udp"
+    sysctls:
+      - net.ipv4.conf.all.src_valid_mark=1    
+    restart: unless-stopped
+
+  ftpd_server:
+    image: stilliard/pure-ftpd
+    container_name: pure-ftpd
+    ports:
+      - "21:21"
+      - "30000-30009:30000-30009"
+    volumes: 
+      - /media/kepler/backup/cctv:/home
+    environment:
+      FTP_USER_NAME: ${FTP_USER}
+      FTP_USER_PASS: ${FTP_PASS}
+      FTP_USER_HOME: /home
+    restart: unless-stopped
+
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./docker-data/prometheus:/etc/prometheus
+      - prometheus_data:/prometheus
+    restart: unless-stopped
+    command:
+      - "--config.file=/etc/prometheus/prometheus.yml"
+
+  grafana:
+    image: grafana/grafana:latest
+    container_name: grafana
+    user: "472"
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./docker-data/grafana/grafana_data:/var/lib/grafana
+    restart: unless-stopped
+
+  node_exporter:
+    image: quay.io/prometheus/node-exporter:latest
+    container_name: node_exporter
+    pid: host
+    restart: unless-stopped
+    volumes:
+      - /:/host:ro,rslave
+    command:
+      - "--path.rootfs=/host"
+
+  cadvisor:
+    image: gcr.io/cadvisor/cadvisor:latest
+    container_name: cadvisor
+    restart: unless-stopped
+    ports:
+      - "8080:8080"
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:ro
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
+    command:
+      - "-docker_only=true"
+      - "-housekeeping_interval=15s"
+      - "-disable_metrics=disk,diskIO,network,tcp,udp,percpu,sched,process"
+
+  nginx:
+    image: nginx:latest
+    container_name: nginx-server
+    ports:
+    - "18080:80"
+    volumes:
+    - ./docker-data/nginx/website:/usr/share/nginx/html
+
+  homeassistant:
+    container_name: homeassistant
+    image: "ghcr.io/home-assistant/home-assistant:stable"
+    network_mode: host
+    volumes:
+      - ./docker-data/homeassistant:/config
+      - /etc/localtime:/etc/localtime:ro
+    restart: unless-stopped
+    privileged: true
