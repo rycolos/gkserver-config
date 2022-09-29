@@ -1,4 +1,5 @@
 ---
+#test
 - hosts: localhost
   connection: local
   become: true
@@ -125,21 +126,21 @@
       state: present
 
 #--- create directories ---
-  - name: create docker home directory
-    file:
-      path: "/home/{{ user }}/docker"
-      mode: 0770
-      owner: "{{ user }}"
-      group: docker
-      state: directory
+  # - name: create docker home directory
+  #   file:
+  #     path: "/home/{{ user }}/docker"
+  #     mode: 0770
+  #     owner: "{{ user }}"
+  #     group: docker
+  #     state: directory
 
-  - name: create dir for scripts
-    file:
-      path: "/home/{{ user }}/bin"
-      mode: 0770
-      owner: "{{ user }}"
-      group: "{{ user }}"
-      state: directory
+  # - name: create dir for scripts
+  #   file:
+  #     path: "/home/{{ user }}/bin"
+  #     mode: 0770
+  #     owner: "{{ user }}"
+  #     group: "{{ user }}"
+  #     state: directory
 
   - name: create dir for logs
     file:
@@ -166,15 +167,21 @@
       state: directory
 
 #--- clone gkserver repo for utilities and config
-  - name: download docker-compose file
+  - name: clone gkserver-config repo
     git:
-      repo: https://github.com/rycolos/docker_config.git
-      dest: /home/{{ user }}/docker
+      repo: https://github.com/rycolos/gkserver-config.git
+      dest: /home/{{ user }}
+    become_user: "{{ user }}"
 
-  - name: download server admin scripts
-    git:
-      repo: https://github.com/rycolos/server-scripts.git
-      dest: /home/{{ user }}/bin
+  # - name: download docker-compose file
+  #   git:
+  #     repo: https://github.com/rycolos/docker_config.git
+  #     dest: /home/{{ user }}/docker
+
+  # - name: download server admin scripts
+  #   git:
+  #     repo: https://github.com/rycolos/server-scripts.git
+  #     dest: /home/{{ user }}/bin
 
 #--- create cronjobs ---
   - name: cron - retention policy
@@ -182,7 +189,7 @@
       name: "retention policy"
       weekday: "0"
       hour: "2"
-      job: /home/kepler/bin/trash_clean.sh && echo "/home/kepler/bin/trash_clean.sh" | python3 /home/kepler/bin/discord-pipe.py
+      job: /home/{{ user }}/bin/trash_clean.sh && echo "/home/{{ user }}/bin/trash_clean.sh" | python3 /home/{{ user }}/bin/discord-pipe.py
       state: present
 
   - name: cron - music library backup
