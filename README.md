@@ -4,7 +4,7 @@ Important stuff first… and I’m always fascinated by the naming conventions p
 
 Fans of King of the Hill may recall GH aka “Good Hank,” Cotton HIll’s new baby, Hank’s half-brother, and Bobby’s newborn uncle.
 
-![Untitled](https://preview.redd.it/ol24q6vy94d71.jpg?auto=webp&s=feab8a307dd1c6d0b9866f9cff7a696381778b80)
+![](https://preview.redd.it/ol24q6vy94d71.jpg?auto=webp&s=feab8a307dd1c6d0b9866f9cff7a696381778b80 | width=200)
 
 The first iteration of this server, KeplerNAS, was named after my wonderful-but-unruly cat, Kepler. I like my cat more than my home server, but sometimes he’s bad and gkserver is always good. And gkserver is certainly better than the old KeplerNAS.
 
@@ -20,7 +20,7 @@ After more reading, Terraform started to feel like overkill for a single on-prem
 
 Like any good automation project, I certainly spent more time automating the solution than just running through my old Apple Notes checklists, but I learned a lot and can be a little less afraid of borking my system drive and starting fresh if need be.
 
-![https://imgs.xkcd.com/comics/automation.png](https://imgs.xkcd.com/comics/automation.png)
+![](https://imgs.xkcd.com/comics/automation.png)
 
 Everything here is a work in progress, so expect frequent commits!
 
