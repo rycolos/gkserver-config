@@ -13,9 +13,9 @@ The first iteration of this server, KeplerNAS, was named after my wonderful-but-
 
 ## Why am I doing this?
 
-I built the original KeplerNas for file storage because I couldn’t justify Apple’s exorbitant storage costs and my Macbook’s drive was quickly filling up. I used a Pi4 and an 8TB external drive. Hanging an external HDD off a Pi case (over USB 3.0) speeds was getting old, so I rebuilt it with better hardware in 2021. I started to run additional services, mostly containerized with [Docker](https://www.docker.com), and quickly began to outgrow the OS drive where I was storing my Docker data. Which brings us to now. 
+I built the original KeplerNas for file storage because I couldn’t justify Apple’s exorbitant storage costs and my Macbook’s drive was quickly filling up. I used a Pi4 and an 8TB external drive. Hanging an external HDD off a Pi (over USB 3.0 speeds) was getting old, so I rebuilt it with better hardware in 2021. I started to run additional services, mostly containerized with [Docker](https://www.docker.com), and quickly began to outgrow the OS drive where I was storing my Docker data. Which brings us to now. 
 
-I needed to upgrade to a 1TB OS drive (and something a bit more robust than a WD Blue). I also wanted to migrate from Linux Mint to Ubuntu Server. I originally thought it’d be nice to have a GUI option, but I haven’t used it in months in favor of SSH and tmux, so why waste the resources? 
+I wanted to upgrade to a 1TB system drive (and something a bit more robust than a WD Blue). I also wanted to migrate from Linux Mint to Ubuntu Server. I originally thought it’d be nice to have a GUI option, but I haven’t used it in months in favor of SSH and tmux, so why waste the resources? 
 
 I was dreading starting from scratch, even with most services running in Docker. Coincidentally, I had been doing some reading about IaC tools like [Ansible](https://www.ansible.com) and [Terraform](https://www.terraform.io) and thought provisioning v2 of my server would be a good project to learn more. 
 
