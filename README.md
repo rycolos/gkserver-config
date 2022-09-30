@@ -18,7 +18,7 @@ I was dreading starting from scratch, even with most services running in Docker.
 
 After more reading, Terraform started to feel like overkill for a single on-prem sever but Ansible felt like a great fit, especially combined with Docker, to spin it up quickly and in a repeatable way. 
 
-Like any good automation project, I certainly spent more time automating the solution than just running through my old Apple Notes checklists, but I learned a lot and can be a little less afraid of borking my system drive and starting fresh if need be.
+Like any good automation project, I certainly spent more time automating the solution than just running through my old Apple Notes checklists, but I learned a lot and can be a little less afraid of borking my system drive and starting fresh if need be. Cue xkcd:
 
 ![](https://imgs.xkcd.com/comics/automation.png)
 
