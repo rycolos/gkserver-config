@@ -4,8 +4,7 @@ Important stuff first… and I’m always fascinated by the naming conventions p
 
 Fans of King of the Hill may recall GH aka “Good Hank,” Cotton HIll’s new baby, Hank’s half-brother, and Bobby’s newborn uncle.
 
-![](https://preview.redd.it/ol24q6vy94d71.jpg?auto=webp&s=feab8a307dd1c6d0b9866f9cff7a696381778b80 | width=200)
-<img src="https://preview.redd.it/ol24q6vy94d71.jpg?auto=webp&s=feab8a307dd1c6d0b9866f9cff7a696381778b80" width="200">
+<img src="https://preview.redd.it/ol24q6vy94d71.jpg?auto=webp&s=feab8a307dd1c6d0b9866f9cff7a696381778b80" width="400">
 
 The first iteration of this server, KeplerNAS, was named after my wonderful-but-unruly cat, Kepler. I like my cat more than my home server, but sometimes he’s bad and gkserver is always good. And gkserver is certainly better than the old KeplerNAS.
 
