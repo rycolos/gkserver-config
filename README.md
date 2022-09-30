@@ -1,4 +1,4 @@
-#gkserver-config
+# gkserver-config
 ...is the documentation and key config files to provision and run my home server — gkserver.
 
 ## Why “gkserver”?
