@@ -93,7 +93,9 @@ I run [Wireguard](https://hub.docker.com/r/linuxserver/wireguard) as a VPN, prim
 
 ### Web
 
-I run a [nginx](https://hub.docker.com/_/nginx) web server to host a simple admin dashboard for gkserver.  
+I run a [nginx](https://hub.docker.com/_/nginx) web server to host a [simple admin dashboard](https://github.com/rycolos/simple-server-startpage) for gkserver. 
+
+<img src="https://imgur.com/7b6ff805-94f2-44d5-86ca-ad341e09ea8f" width="600">
 
 ### Monitoring/Alerting
 
