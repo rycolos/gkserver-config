@@ -1,4 +1,7 @@
-# Why “gkserver”?
+#gkserver-config
+...is the documentation and key config files to provision and run my home server — gkserver.
+
+## Why “gkserver”?
 
 Important stuff first… and I’m always fascinated by the naming conventions people apply to their projects, from boats, to guitars, to computer hardware, and software releases. My home server’s hostname is *gkserver*. 
 
@@ -8,7 +11,7 @@ Fans of King of the Hill may recall GH aka “Good Hank,” Cotton HIll’s new 
 
 The first iteration of this server, KeplerNAS, was named after my wonderful-but-unruly cat, Kepler. I like my cat more than my home server, but sometimes he’s bad and gkserver is always good. And gkserver is certainly better than the old KeplerNAS.
 
-# Why am I doing this?
+## Why am I doing this?
 
 I originally built the old KeplerNas for file storage because I couldn’t justify Apple’s exorbitant storage costs and my Macbook’s drive was quickly filling up. Hanging an external HDD off a Pi case (over USB 3.0) speeds was getting old, so I rebuilt it with better hardware in 2021. I started to run additional services, mostly containerized with [Docker](https://www.docker.com), and quickly began to outgrow the OS drive where I was storing my Docker data. Which brings us to now. 
 
@@ -24,7 +27,7 @@ Like any good automation project, I certainly spent more time automating the sol
 
 Everything here is a work in progress, so expect frequent commits!
 
-# System Specs
+## System Specs
 
 Nothing fancy here, but even these specs are far overkill for my current use case. 
 
@@ -39,7 +42,7 @@ Nothing fancy here, but even these specs are far overkill for my current use cas
     - 4TB WD Blue - Primary backup drive (Syncthing from other computers, Docker data, Plex library, CCTV footage, Creative work)
     - 4TB WD Blue - Plex Library
 
-# Provisioning with Ansible
+## Provisioning with Ansible
 
 I’m using `ansible-pull` from the local machine to run the playbook stored on this repo. I’m running everything in a single playbook for now to keep things simple, but may evolve this as I get deeper into learning Ansible. Ansible is being used to handle a handful of tasks:
 
@@ -50,11 +53,11 @@ I’m using `ansible-pull` from the local machine to run the playbook stored on 
 - Install cronjobs related to the above scripts
 - Miscellaneous config tasks like create directories, set my timezone, configure git, and configure nano/vim.
 
-# Manual tasks
+## Manual tasks
 
 Not everything is being automated, for a variety of reasons.
 
-## Initializing
+### Initializing
 
 - Install [Ubuntu Server 22.04 LTS](https://ubuntu.com/download/server) locally on the machine.
 - Update repos and install Ansible and Git
@@ -62,19 +65,19 @@ Not everything is being automated, for a variety of reasons.
 - Use `ansible-pull` to run the playbook in this repo, providing the system user (created during OS installation) as a parameter
     - `sudo ansible-pull -e "user=USER" -U https://github.com/rycolos/gkserver-config ansible/local.yml`
 
-## Post Provisioning
+### Post Provisioning
 
 - I’ll need to do a one-time transfer of my Docker data folders and secrets files for Docker and some of my scripts.
 - SSH config and other hardening - I’m wary of relying on regex in Ansible for something as important as hardening my system. Given that I’d be verifying these configs manually anyhow, it didn’t seem worth giving Ansible the job.
 - Internal HDD mounting and fstab edits - Similar to network tasks, I know Ansible *can* handle this, but it’s so important that I’d be verifying manually anyways so I’d rather own for now.
 - rclone install and setup - I have seen reports of successful rclone configs either as a Docker container or bare metal with Ansible, but both options seem fraught with issues and setup pains. It’s a quick setup so I’ll keep it manual for now.
 
-## Recurring
+### Recurring
 
 - System and Docker container updates - I prefer to vet and monitor my updates, so I do this weekly
 - Backup to cold storage - I do a manual weekly clone of my backup drive to an offline drive that I keep disconnected from power when not in use
 
-# Docker services
+## Docker services
 
 ### Media
 
@@ -100,17 +103,17 @@ I run of a joint stack of [Grafana](https://hub.docker.com/r/grafana/grafana/), 
 
 I used to use [Home Assistant](https://hub.docker.com/_/nginx) for everything but now I’m just using it to pull in data from select IoT devices which I’ll eventually store in a db to explore in Grafana. Otherwise, I’m mostly devoted to Apple Home and use [Homebridge](https://github.com/oznu/docker-homebridge) to bring in unsupported devices in my Home. I may eventually move back to Home Assistant, but Apple Home is a little more user friendly for family.
 
-# Other core services and utilities
+## Other core services and utilities
 
 - [rclone](https://rclone.org) - I backup my core backup drive to Google Drive on schedule with a cronjob. I may eventually move from GDrive to Backblaze, S3, or another option, but GDrive is working for now.
 - SFTP/SCP - Call me old fashioned, but I prefer to use SCP or SFTP for any ad-hoc file transfers.
 - [smartctl](https://www.smartmontools.org) for HDD monitoring - I run monthly SMART checks of my internal HDDs, scheduled with cron. I should probably start using smartd…
 
-# Scripts
+## Scripts
 
 Nothing too special here — mostly some simple bash rsync scripts, a script to nuke logs and rsync versioning directories, and `discord-pipe.py`  which is used to report my completed cronjobs to a Discord server via webhook. These could be improved and made more modular, and will be in time, but they’re functional.
 
-# What’s next?
+## What’s next?
 
 - Start using [Portainer](https://www.portainer.io) for web admin of Docker and start using stacks rather than a single docker-compose.yml for all services
 - Stream data from Home Assistant into Grafana, probably via a containerized [InfluxDB](https://www.google.com/search?client=safari&rls=en&q=influxdb&ie=UTF-8&oe=UTF-8)
