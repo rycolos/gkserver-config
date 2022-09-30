@@ -97,7 +97,7 @@ I run a [nginx](https://hub.docker.com/_/nginx) web server to host a simple admi
 
 ### Monitoring/Alerting
 
-I run of a joint stack of [Grafana](https://hub.docker.com/r/grafana/grafana/), [Prometheus](https://hub.docker.com/r/prom/prometheus), [Node Exporter](https://github.com/prometheus/node_exporter), and [cAdvisor](https://github.com/google/cadvisor) to monitor system and container metrics, as well as trigger alerts for cpu, memory, and temperature. This is no doubt overkill, but it was fun and educational to set up.
+I run of a joint stack of [Grafana](https://hub.docker.com/r/grafana/grafana/), [Prometheus](https://hub.docker.com/r/prom/prometheus), [Node Exporter](https://github.com/prometheus/node_exporter), and [cAdvisor](https://github.com/google/cadvisor) to monitor system and container metrics, as well as trigger alerts (to a Discord webhook) for cpu, memory, and temperature. This is no doubt overkill, but it was fun and educational to set up.
 
 ### Smart Home
 
