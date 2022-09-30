@@ -81,7 +81,7 @@ Not everything is being automated, for a variety of reasons.
 
 ### Media
 
-I use [Plex](https://hub.docker.com/r/linuxserver/plex) for on-site music streaming, and not for video.
+I use [Plex](https://hub.docker.com/r/linuxserver/plex) for on-site music streaming.
 
 ### Backup/Sync
 
