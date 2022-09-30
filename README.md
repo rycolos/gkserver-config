@@ -100,7 +100,7 @@ I run of a joint stack of [Grafana](https://hub.docker.com/r/grafana/grafana/), 
 
 I used to use [Home Assistant](https://hub.docker.com/_/nginx) for everything but now I’m just using it to pull in data from select IoT devices which I’ll eventually store in a db to explore in Grafana. Otherwise, I’m mostly devoted to Apple Home and use [Homebridge](https://github.com/oznu/docker-homebridge) to bring in unsupported devices in my Home. I may eventually move back to Home Assistant, but Apple Home is a little more user friendly for family.
 
-# Other core services
+# Other core services and utilities
 
 - [rclone](https://rclone.org) - I backup my core backup drive to Google Drive on schedule with a cronjob. I may eventually move from GDrive to Backblaze, S3, or another option, but GDrive is working for now.
 - SFTP/SCP - Call me old fashioned, but I prefer to use SCP or SFTP for any ad-hoc file transfers.
