@@ -1,19 +1,19 @@
 # gkserver-config
-...is the documentation and key config files to provision and run my home server — gkserver.
+...is the documentation and key config files to provision and run my home server — *gkserver*.
 
 ## Why “gkserver”?
 
-Important stuff first… and I’m always fascinated by the naming conventions people apply to their projects, from boats, to guitars, to computer hardware, and software releases. My home server’s hostname is *gkserver*. 
+Important stuff first… and I’m always fascinated by the naming conventions people apply to their projects, from boats, to guitars, to computer hardware, and software releases.
 
 Fans of King of the Hill may recall GH aka “Good Hank,” Cotton HIll’s new baby, Hank’s half-brother, and Bobby’s newborn uncle.
 
 <img src="https://preview.redd.it/ol24q6vy94d71.jpg?auto=webp&s=feab8a307dd1c6d0b9866f9cff7a696381778b80" width="400">
 
-The first iteration of this server, KeplerNAS, was named after my wonderful-but-unruly cat, Kepler. I like my cat more than my home server, but sometimes he’s bad and gkserver is always good. And gkserver is certainly better than the old KeplerNAS.
+The first iteration of this server, KeplerNAS, was named after my wonderful-but-unruly cat, Kepler. I like my cat more than my home server, but sometimes he’s bad and gkserver is always good. And gkserver is certainly better than its ancestor, KeplerNAS.
 
 ## Why am I doing this?
 
-I originally built the old KeplerNas for file storage because I couldn’t justify Apple’s exorbitant storage costs and my Macbook’s drive was quickly filling up. Hanging an external HDD off a Pi case (over USB 3.0) speeds was getting old, so I rebuilt it with better hardware in 2021. I started to run additional services, mostly containerized with [Docker](https://www.docker.com), and quickly began to outgrow the OS drive where I was storing my Docker data. Which brings us to now. 
+I built the original KeplerNas for file storage because I couldn’t justify Apple’s exorbitant storage costs and my Macbook’s drive was quickly filling up. I used a Pi4 and an 8TB external drive. Hanging an external HDD off a Pi case (over USB 3.0) speeds was getting old, so I rebuilt it with better hardware in 2021. I started to run additional services, mostly containerized with [Docker](https://www.docker.com), and quickly began to outgrow the OS drive where I was storing my Docker data. Which brings us to now. 
 
 I needed to upgrade to a 1TB OS drive (and something a bit more robust than a WD Blue). I also wanted to migrate from Linux Mint to Ubuntu Server. I originally thought it’d be nice to have a GUI option, but I haven’t used it in months in favor of SSH and tmux, so why waste the resources? 
 
