@@ -1,5 +1,4 @@
 ---
-#test
 - hosts: localhost
   connection: local
   become: true
@@ -70,7 +69,12 @@
         - containerd.io  
         - docker-compose-plugin
       state: latest
-    
+  
+  - name: create docker group
+    group:
+      name: docker
+      state: present
+
   - name: add user to docker group
     user:
       name: "{{ user }}"
