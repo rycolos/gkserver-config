@@ -9,7 +9,9 @@ Fans of King of the Hill may recall GH aka “Good Hank,” Cotton HIll’s new 
 
 <img src="https://preview.redd.it/ol24q6vy94d71.jpg?auto=webp&s=feab8a307dd1c6d0b9866f9cff7a696381778b80" width="400">
 
-The first iteration of this server, KeplerNAS, was named after my wonderful-but-unruly cat, Kepler. I like my cat more than my home server, but sometimes he’s bad and gkserver is always good. And gkserver is certainly better than its ancestor, KeplerNAS.
+The first iteration of this server, KeplerNAS, was named after my wonderful-but-unruly cat, Kepler. I like my cat more than my home server, but sometimes he’s bad and gkserver is always good. And gkserver is certainly better than its ancestor, KeplerNAS. So, gkserver is the _good_ Kepler, where the signified "Kepler" depends on who or what is being bad that day.
+
+<img src="https://i.imgur.com/NEPdhRi.png" width="400">
 
 ## Why am I doing this?
 
