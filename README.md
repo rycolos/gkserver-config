@@ -11,6 +11,8 @@ Fans of King of the Hill may recall GH aka “Good Hank,” Cotton HIll’s new 
 
 The first iteration of this server, KeplerNAS, was named after my wonderful-but-unruly cat, Kepler. I like my cat more than my home server, but sometimes he’s bad and gkserver is always good. And gkserver is certainly better than its ancestor, KeplerNAS.
 
+<img src="https://i.imgur.com/NEPdhRi.png" width="400">
+
 ## Why am I doing this?
 
 I built the original KeplerNAS for file storage because I couldn’t justify Apple’s exorbitant storage costs and my Macbook’s drive was quickly filling up. I used a Pi4 and an 8TB external drive. Hanging an external HDD off a Pi (over USB 3.0 speeds) was getting old, so I rebuilt it with better hardware in 2021. I started to run additional services, mostly containerized with [Docker](https://www.docker.com), and quickly began to outgrow the OS drive where I was storing my Docker data. Which brings us to now. 
