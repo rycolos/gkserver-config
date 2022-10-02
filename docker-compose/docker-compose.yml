@@ -17,8 +17,8 @@ services:
       - PGID=1000
       - VERSION=docker
     volumes:
-      - ${BACKUP_DIR}/plex_library/:/config
-      - ${BACKUP_DIR}/plex_library/music/:/music
+      - /media/plex_library/:/config
+      - /media/plex_library/music/:/music
     restart: unless-stopped
 
   syncthing:
@@ -30,8 +30,8 @@ services:
       - TZ=America/New_York
     volumes:
       - ${DATA_DIR}/syncthing/config:/config
-      - ${BACKUP_DIR}/backup/ryan_mba_documents:/ryan_mba_documents
-      - ${BACKUP_DIR}/backup/ryan_mba_desktop:/ryan_mba_desktop
+      - /media/backup_main/ryan_mba_documents:/ryan_mba_documents
+      - /media/backup_main/ryan_mba_desktop:/ryan_mba_desktop
     ports:
       - "8384:8384"
       - "22000:22000/tcp"
@@ -81,7 +81,7 @@ services:
       - "21:21"
       - "30000-30009:30000-30009"
     volumes: 
-      - ${BACKUP_DIR}/backup/cctv:/home
+      - /media/backup_main/cctv:/home
     environment:
       FTP_USER_NAME: ${FTP_USER}
       FTP_USER_PASS: ${FTP_PASS}
