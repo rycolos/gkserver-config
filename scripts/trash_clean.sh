@@ -5,10 +5,10 @@ days2=60
 
 logdest="/home/kepler/logs/retention.log"
 logsrc="/home/kepler/logs"
-trashsource1="/media/kepler/backup/plex_library/plex_library_trash"
-trashsource2="/media/kepler/backup/gknas_home/gknas_home_trash"
-trashsource3="/media/kepler/backup/docker-data/docker-data_trash/$(date +%m-%d-%Y)"
-trashsource4="/media/kepler/backup/cctv/"
+trashsource1="/media/backup_main/plex_library/plex_library_trash"
+trashsource2="/media/backup_main/gkserver_home/gkserver_home_trash"
+trashsource3="/media/backup_main/docker-data/docker-data_trash/$(date +%m-%d-%Y)"
+trashsource4="/media/backup_main/cctv/"
 
 echo $(date) >> $logdest
 echo "" >> $logdest

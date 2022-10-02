@@ -2,8 +2,8 @@
 
 logdest="/home/kepler/logs/home_gkserver_backup.log"
 src1="/home/kepler"
-dest1="/media/kepler/backup/gknas_home"
-trashdir="/media/kepler/backup/gknas_home/gknas_home_trash/$(date +%m-%d-%Y)"
+dest1="/media/backup_main/gkserver_home"
+trashdir="/media/backup_main/gkserver_home/gkserver_home_trash/$(date +%m-%d-%Y)"
 
 echo $(date) >> $logdest
 echo "" >> $logdest

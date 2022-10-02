@@ -1,9 +1,9 @@
 #!/bin/bash
 
 logdest="/home/kepler/logs/docker_gkserver_backup.log"
-src1="/home/kepler/docker/docker-data"
-dest1="/media/kepler/backup/docker-data"
-trashdir="/media/kepler/backup/docker-data/docker-data_trash/$(date +%m-%d-%Y)"
+src1="/home/kepler/gkserver/docker-data"
+dest1="/media/backup_main/docker-data"
+trashdir="/media/backup_main/docker-data/docker-data_trash/$(date +%m-%d-%Y)"
 
 echo $(date) >> $logdest
 echo "" >> $logdest
