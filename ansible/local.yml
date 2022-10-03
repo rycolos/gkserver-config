@@ -166,43 +166,50 @@
   - name: cron - retention policy
     cron:
       name: "retention policy"
-      weekday: "0"
+      minute: "0"
       hour: "2"
+      weekday: "5"
       job: /home/{{ user }}/gkserver/scripts/trash_clean.sh && echo "/home/{{ user }}/gkserver/scripts/trash_clean.sh" | python3 /home/{{ user }}/gkserver/scripts/discord-pipe.py
       state: present
 
   - name: cron - music library backup
     cron:
       name: "music library backup"
-      weekday: "0"
+      minute: "0"
       hour: "0"
+      weekday: "0"
       job: /home/{{ user }}/gkserver/scripts/plex_gkserver_backup.sh && echo "/home/{{ user }}/gkserver/scripts/plex_gkserver_backup.sh" | python3 /home/{{ user }}/gkserver/scripts/discord-pipe.py
       state: present
 
   - name: cron - home to backup_main
     cron:
       name: "home to backup_main"
+      minute: "0"
       hour: "2"
       job: /home/{{ user }}/gkserver/scripts/home_gkserver_backup.sh && echo "/home/{{ user }}/gkserver/scripts/home_gkserver_backup.sh" | python3 /home/{{ user }}/gkserver/scripts/discord-pipe.py
 
   - name: cron - docker-data to backup_main
     cron:
       name: "docker-data to backup_main"
+      minute: "0"
       hour: "3"
       job: /home/{{ user }}/gkserver/scripts/docker_gkserver_backup.sh && echo "/home/{{ user }}/gkserver/scripts/docker_gkserver_backup.sh" | python3 /home/{{ user }}/gkserver/scripts/discord-pipe.py
       state: present
 
   - name: cron - backup_main to gdrive
     cron:
-      name: "retention policy"
-      weekday: "6"
+      name: "backup_main to gdrive"
+      minute: "0"
       hour: "2"
+      weekday: "6"
       job: /home/{{ user }}/gkserver/scripts/gdrive_gkserver_backup.sh && echo "/home/{{ user }}/gkserver/scripts/gdrive_gkserver_backup.sh" | python3 /home/{{ user }}/gkserver/scripts/discord-pipe.py
       state: present
 
   - name: cron - backup_main test
     cron:
       name: "backup_main test"
+      minute: "0"
+      hour: "0"
       day: "18"
       job: /usr/sbin/smartctl --test=long /dev/sda &> /dev/null
       state: present
@@ -210,6 +217,8 @@
   - name: cron - backup_main report
     cron:
       name: "backup_main report"
+      minute: "0"
+      hour: "0"
       day: "20"
       job: /usr/sbin/smartctl -a /dev/sda >> /home/{{ user }}/logs/hdd_ext1_report.log 2>&1 && echo "/usr/sbin/smartctl -a /dev/sda" | python3 /home/{{ user }}/gkserver/scripts/discord-pipe.py
       state: present
@@ -217,6 +226,8 @@
   - name: cron - plex_library test
     cron:
       name: "plex_library test"
+      minute: "0"
+      hour: "0"
       day: "22"
       job: /usr/sbin/smartctl --test=long /dev/sdb &> /dev/null
       state: present
@@ -224,6 +235,8 @@
   - name: cron - plex_library report
     cron:
       name: "plex_library report"
+      minute: "0"
+      hour: "0"
       day: "24"
       job: /usr/sbin/smartctl -a /dev/sdb >> /home/{{ user }}/logs/hdd_ext2_report.log 2>&1 && echo "/usr/sbin/smartctl -a /dev/sdb" | python3 /home/{{ user }}/gkserver/scripts/discord-pipe.py
       state: present
