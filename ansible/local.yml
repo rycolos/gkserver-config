@@ -165,7 +165,7 @@
 #--- create cronjobs ---
   - name: cron - retention policy
     cron:
-      name: "retention policy"
+      name: "retention policy - saturday 2am"
       minute: "0"
       hour: "2"
       weekday: "5"
@@ -174,7 +174,7 @@
 
   - name: cron - music library backup
     cron:
-      name: "music library backup"
+      name: "music library backup - sunday 12am"
       minute: "0"
       hour: "0"
       weekday: "0"
@@ -183,14 +183,14 @@
 
   - name: cron - home to backup_main
     cron:
-      name: "home to backup_main"
+      name: "home to backup_main - daily 2am"
       minute: "0"
       hour: "2"
       job: /home/{{ user }}/gkserver/scripts/home_gkserver_backup.sh && echo "/home/{{ user }}/gkserver/scripts/home_gkserver_backup.sh" | python3 /home/{{ user }}/gkserver/scripts/discord-pipe.py
 
   - name: cron - docker-data to backup_main
     cron:
-      name: "docker-data to backup_main"
+      name: "docker-data to backup_main - daily 3am"
       minute: "0"
       hour: "3"
       job: /home/{{ user }}/gkserver/scripts/docker_gkserver_backup.sh && echo "/home/{{ user }}/gkserver/scripts/docker_gkserver_backup.sh" | python3 /home/{{ user }}/gkserver/scripts/discord-pipe.py
@@ -198,7 +198,7 @@
 
   - name: cron - backup_main to gdrive
     cron:
-      name: "backup_main to gdrive"
+      name: "backup_main to gdrive - sunday 2am"
       minute: "0"
       hour: "2"
       weekday: "6"
@@ -207,7 +207,7 @@
 
   - name: cron - backup_main test
     cron:
-      name: "backup_main test"
+      name: "backup_main hdd test - 18th of the month"
       minute: "0"
       hour: "0"
       day: "18"
@@ -216,7 +216,7 @@
 
   - name: cron - backup_main report
     cron:
-      name: "backup_main report"
+      name: "backup_main hdd report - 20th of the month"
       minute: "0"
       hour: "0"
       day: "20"
@@ -225,7 +225,7 @@
 
   - name: cron - plex_library test
     cron:
-      name: "plex_library test"
+      name: "plex_library hdd test - 22nd of the month"
       minute: "0"
       hour: "0"
       day: "22"
@@ -234,7 +234,7 @@
 
   - name: cron - plex_library report
     cron:
-      name: "plex_library report"
+      name: "plex_library hdd report - 24th of the month"
       minute: "0"
       hour: "0"
       day: "24"
