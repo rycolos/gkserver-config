@@ -107,23 +107,6 @@
     become_user: "{{ user }}"
 
 #--- assorted config ---
-  - name: config user nano editor
-    lineinfile:
-      path: /home/{{ user }}/.nanorc
-      line: set linenumbers
-      state: present
-      create: yes
-      backup: yes
-    become_user: "{{ user }}"
-
-  - name: config root nano editor
-    lineinfile:
-      path: /etc/nanorc
-      line: set linenumbers
-      state: present
-      create: yes
-      backup: yes
-
   - name: set default shell to fish
     user:
       name: "{{ user }}"
