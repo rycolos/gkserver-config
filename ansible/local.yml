@@ -203,7 +203,7 @@
       minute: "0"
       hour: "0"
       day: "20"
-      job: /usr/sbin/smartctl -a /dev/sda >> /home/{{ user }}/logs/hdd_ext1_report.log 2>&1 && echo "/usr/sbin/smartctl -a /dev/sda" | python3 /home/{{ user }}/gkserver/scripts/discord-pipe.py
+      job: /usr/sbin/smartctl -a /dev/sda >> /home/{{ user }}/logs/hdd_ext1_report.log && echo "/usr/sbin/smartctl -a /dev/sda" | python3 /home/{{ user }}/gkserver/scripts/discord-pipe.py
       state: present
 
   - name: cron - plex_library test
@@ -221,7 +221,7 @@
       minute: "0"
       hour: "0"
       day: "24"
-      job: /usr/sbin/smartctl -a /dev/sdb >> /home/{{ user }}/logs/hdd_ext2_report.log 2>&1 && echo "/usr/sbin/smartctl -a /dev/sdb" | python3 /home/{{ user }}/gkserver/scripts/discord-pipe.py
+      job: /usr/sbin/smartctl -a /dev/sdb >> /home/{{ user }}/logs/hdd_ext2_report.log && echo "/usr/sbin/smartctl -a /dev/sdb" | python3 /home/{{ user }}/gkserver/scripts/discord-pipe.py
       state: present
 
   - name: cron - summarize backup logs
@@ -229,5 +229,5 @@
       name: "summarize backup logs - daily 4am"
       minute: "0"
       hour: "4"
-      job: tail -n 5 /home/{{ user }}/logs/*_backup.log > summary.log 2>&1 && echo "tail -n 5 /home/{{ user }}/logs/*_backup.log > summary.log" | python3 /home/{{ user }}/gkserver/scripts/discord-pipe.py
+      job: tail -n 5 /home/{{ user }}/logs/*_backup.log > summary.log && echo "tail -n 5 /home/{{ user }}/logs/*_backup.log > summary.log" | python3 /home/{{ user }}/gkserver/scripts/discord-pipe.py
       state: present
