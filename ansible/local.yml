@@ -229,5 +229,5 @@
       name: "summarize backup logs - daily 4am"
       minute: "0"
       hour: "4"
-      job: tail -n 5 /home/{{ user }}/logs/*_backup.log > summary.log && echo "tail -n 5 /home/{{ user }}/logs/*_backup.log > summary.log" | python3 /home/{{ user }}/gkserver/scripts/discord-pipe.py
+      job: tail -n 5 /home/{{ user }}/logs/*_backup.log > /home/{{user}}/logs/summary.log && echo "tail -n 5 /home/{{ user }}/logs/*_backup.log > /home/{{user}}/logs/summary.log" | python3 /home/{{ user }}/gkserver/scripts/discord-pipe.py
       state: present
