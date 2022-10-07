@@ -117,7 +117,7 @@
   - name: create dir for logs
     file:
       path: "/home/{{ user }}/logs"
-      mode: 0770
+      mode: 0775
       owner: "{{ user }}"
       group: "{{ user }}"
       state: directory
@@ -125,7 +125,7 @@
   - name: create backup hdd mount point
     file:
       path: "/media/backup_main"
-      mode: 0770
+      mode: 0775
       owner: "{{ user }}"
       group: "{{ user }}"
       state: directory
@@ -133,7 +133,7 @@
   - name: create plex hdd mount point
     file:
       path: "/media/plex_library"
-      mode: 0770
+      mode: 0775
       owner: "{{ user }}"
       group: "{{ user }}"
       state: directory
