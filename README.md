@@ -73,6 +73,7 @@ Not everything is being automated, for a variety of reasons.
 - SSH config and other hardening - I’m wary of relying on regex in Ansible for something as important as hardening my system. Given that I’d be verifying these configs manually anyhow, it didn’t seem worth giving Ansible the job.
 - Internal HDD mounting and fstab edits - Similar to network tasks, I know Ansible *can* handle this, but it’s so important that I’d be verifying manually anyways so I’d rather own for now.
 - rclone install and setup - I have seen reports of successful rclone configs either as a Docker container or bare metal with Ansible, but both options seem fraught with issues and setup pains. It’s a quick setup so I’ll keep it manual for now.
+- Install (CyberPower PowerPanel)[https://www.cyberpowersystems.com/product/software/power-panel-personal/powerpanel-for-linux/] to enable auto-shutdown in the event of a utility power failure. I have this configured to alert me via Discord using the `powerfail_discord.sh` script.
 
 ### Recurring
 
