@@ -13,7 +13,7 @@ username = config_file['user']['user1']
 now = datetime.now()
 read = sys.stdin.read()
 
-content = f'Cron job completed at {now}\n```{read}```'
+content = f'Alert from {username} at {now}\n```{read}```'
 
 data = {
     'content' : content,
