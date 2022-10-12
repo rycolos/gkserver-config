@@ -37,6 +37,7 @@
         - tree
         - vim
         - smartmontools
+        - unzip
       state: latest
 
 #--- install docker ---
