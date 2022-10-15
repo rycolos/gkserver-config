@@ -139,6 +139,14 @@
       group: "{{ user }}"
       state: directory
 
+  - name: create ext backup mount point
+    file:
+      path: "/media/backup2_ext"
+      mode: 0775
+      owner: "{{ user }}"
+      group: "{{ user }}"
+      state: directory
+
 #--- clone gkserver repo for utilities and config
   - name: clone gkserver-config repo
     git:
