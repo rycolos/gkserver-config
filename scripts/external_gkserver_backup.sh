@@ -3,7 +3,7 @@
 logdest="/home/kepler/logs/external_gkserver_backup.log"
 src1="/media/backup_main"
 dest1="/media/backup2_ext"
-trashdir="/media/backup_2T_port/gkserver_backup_trash/$(date +%m-%d-%Y)"
+trashdir="/media/backup2_ext/gkserver_backup_trash/$(date +%m-%d-%Y)"
 
 echo $(date) >> $logdest
 echo "" >> $logdest
