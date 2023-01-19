@@ -38,6 +38,7 @@
         - vim
         - smartmontools
         - unzip
+        - sysstat
       state: latest
 
 #--- install docker ---
