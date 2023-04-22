@@ -32,6 +32,7 @@ services:
       - ${DATA_DIR}/syncthing/config:/config
       - /media/backup_main/ryan_mba_documents:/ryan_mba_documents
       - /media/backup_main/ryan_mba_desktop:/ryan_mba_desktop
+      - /media/backup_main/ryan_gaming_pc:/ryan_gaming_pc
     ports:
       - "8384:8384"
       - "22000:22000/tcp"
