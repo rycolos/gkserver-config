@@ -83,6 +83,35 @@
       append: yes
       state: present
 
+#--- install syncthing ---
+  - name: add syncthing repo to apt
+    apt_repository:
+      repo: deb https://apt.syncthing.net/ syncthing stable
+      state: present 
+  
+  - name: add syncthing pgp apt key
+    apt_key:
+      url: https://syncthing.net/release-key.txt
+      state: present
+
+  - name: install syncthing
+    apt:
+      name:
+        - syncthing
+      state: latest
+
+  - name: Enable syncthing service
+    ansible.builtin.systemd:
+      name: "syncthing@{{ user }}.service"
+      enabled: true
+      masked: no
+  
+  - name: Start syncthing service
+    service:
+      name: "syncthing"
+      state: "started"
+      enabled: true
+
 #--- configure git ---
   - name: set git user
     git_config:
