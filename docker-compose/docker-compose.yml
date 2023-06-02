@@ -19,6 +19,8 @@ services:
     volumes:
       - /media/plex_library/:/config
       - /media/plex_library/music/:/music
+      - /media/plex_library/tv/:/tv
+      - /media/plex_library/movies/:/movies
     restart: unless-stopped
 
   syncthing:
