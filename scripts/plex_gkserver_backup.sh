@@ -1,8 +1,8 @@
 #!/bin/bash
 
 logdest="/home/kepler/logs/plex_gkserver_backup.log"
-src1="/media/plex_library/music"
-dest1="/media/backup_main/plex_library/music"
+src1="/media/plex_library"
+dest1="/media/backup_main/plex_library"
 trashdir="/media/backup_main/plex_library/plex_library_trash/$(date +%m-%d-%Y)"
 
 echo $(date) >> $logdest
