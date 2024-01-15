@@ -7,6 +7,24 @@ volumes:
     driver: local
 
 services:
+  pihole:
+    container_name: pihole
+    image: pihole/pihole:latest
+    ports:
+      - "53:53/tcp"
+      - "53:53/udp"
+      - "9080:80/tcp"
+    environment:
+      TZ: 'America/New_York'
+      WEBPASSWORD: '${PIHOLE_PW}'
+      DNSMASQ_LISTENING: 'all'
+      PIHOLE_DNS_: '9.9.9.9;149.112.112.112' #quad9
+      FTLCONF_LOCAL_IPV4: '192.168.1.87'
+    volumes:
+      - '${DATA_DIR}/etc-pihole:/etc/pihole'
+      - '${DATA_DIR}/etc-dnsmasq.d:/etc/dnsmasq.d'
+    restart: unless-stopped
+
   plex:
     image: linuxserver/plex:latest
     container_name: plex
