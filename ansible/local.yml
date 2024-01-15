@@ -39,6 +39,7 @@
         - smartmontools
         - unzip
         - sysstat
+        - net-tools
       state: latest
 
 #--- install docker ---
