@@ -40,6 +40,7 @@
         - unzip
         - sysstat
         - net-tools
+        - neofetch
       state: latest
 
 #--- install docker ---
