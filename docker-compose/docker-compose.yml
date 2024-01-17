@@ -20,6 +20,7 @@ services:
       DNSMASQ_LISTENING: 'all'
       PIHOLE_DNS_: '9.9.9.9;149.112.112.112' #quad9
       FTLCONF_LOCAL_IPV4: '192.168.1.87'
+      DNSSEC: 'true'
     volumes:
       - '${DATA_DIR}/etc-pihole:/etc/pihole'
       - '${DATA_DIR}/etc-dnsmasq.d:/etc/dnsmasq.d'
