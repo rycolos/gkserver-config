@@ -5,8 +5,38 @@ volumes:
     driver: local
   grafana_data:
     driver: local
+  portainer_data:
+    driver: local
 
 services:
+  speedtest:
+    container_name: speedtest
+    image: henrywhitaker3/speedtest-tracker
+    ports:
+      - '8765:80'
+    volumes:
+      - "${DATA_DIR}/speedtest/config:/config"
+    environment:
+      TZ: 'America/New_York'
+      OOKLA_EULA_GDPR: 'true'
+    logging:
+      driver: "json-file"
+      options:
+        max-file: "10"
+        max-size: "200k"
+    restart: unless-stopped
+
+  portainer:
+    image: portainer/portainer-ce:alpine
+    container_name: portainer
+    command: -H unix:///var/run/docker.sock
+    ports:
+      - "9000:9000"
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock"
+      - "${DATA_DIR}/portainer_data:/data"
+    restart: always
+
   pihole:
     container_name: pihole
     image: pihole/pihole:latest
